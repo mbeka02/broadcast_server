@@ -15,7 +15,7 @@ type Client struct {
 	conn      *websocket.Conn
 }
 
-func newClient(serverURL string) *Client {
+func NewClient(serverURL string) *Client {
 	return &Client{serverURL: serverURL}
 }
 
@@ -28,6 +28,7 @@ func (c *Client) Connect() error {
 	c.conn = conn
 	// read messages in a separate go-routine
 	go c.readMessages()
+	c.readUserInput()
 	return nil
 }
 
@@ -46,6 +47,7 @@ func (c *Client) readMessages() {
 
 func (c *Client) readUserInput() {
 	scanner := bufio.NewScanner(os.Stdin)
+	fmt.Println("Type your messages here(Press Enter to send)")
 	for scanner.Scan() {
 		msg := strings.TrimSpace(scanner.Text())
 		switch msg {
