@@ -1,6 +1,6 @@
 # BROADCAST SERVER
 
-This is a simple CLI based application that can be used to either start a server or connect to the server as a client. The server utilizes websockets to broadcast messagesto all the connected clients - https://roadmap.sh/projects/broadcast-server
+This is a simple CLI based application that can be used to either start a server or connect to the server as a client. The server utilizes websockets to broadcast messages to all the connected clients - https://roadmap.sh/projects/broadcast-server
 
 When the server is started using the broadcast-server start command, it listens for client connections on a specified port (can be configured using command options otherwise port 3000 is used). When a client connects and sends a message, the server broadcasts this message to all connected clients using websockets.
 
