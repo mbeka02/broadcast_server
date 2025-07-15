@@ -1,29 +1,12 @@
 package server
 
 import (
-	"fmt"
 	"log"
 	"net/http"
 )
 
-func (s *Server) Run() {
-	// start the hub in a separate go-routine
-	go s.hub.Run()
-	router := http.NewServeMux()
-	addr := ":" + s.Addr
-	router.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		fmt.Fprintln(w, "home route")
-	})
-	router.HandleFunc("/ws", s.handleWs)
-	fmt.Println("...server is listening on port", addr)
-	err := http.ListenAndServe(addr, router)
-	if err != nil {
-		log.Fatalf("error , unable to run the server:%v", err)
-	}
-}
-
 func (s *Server) handleWs(w http.ResponseWriter, r *http.Request) {
-	// upgrade HTTP conn to the websocket protocol
+	// upgrade HTTP connection to the websocket protocol
 	conn, err := s.Upgrader.Upgrade(w, r, nil)
 	if err != nil {
 		log.Println(" ws upgrade err:", err)
