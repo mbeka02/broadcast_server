@@ -50,19 +50,16 @@ func (c *Client) readUserInput() {
 	fmt.Println("Type your messages here(Press Enter to send)")
 	for scanner.Scan() {
 		msg := strings.TrimSpace(scanner.Text())
-		switch msg {
-		case "":
+		if msg == "" {
 			continue
-		case "/q":
-		case "/c":
-		case "/quit":
+		}
+		if msg == "/q" || msg == "/c" || msg == "/quit" {
 			break
-		default:
-			err := c.conn.WriteMessage(websocket.TextMessage, []byte(msg))
-			if err != nil {
-				log.Println("write error:", err)
-				break
-			}
+		}
+		err := c.conn.WriteMessage(websocket.TextMessage, []byte(msg))
+		if err != nil {
+			log.Println("write error:", err)
+			break
 		}
 
 	}
